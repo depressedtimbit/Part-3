@@ -16,6 +16,7 @@ public class Villager : MonoBehaviour
     Vector2 movement;
     protected float speed = 3;
 
+    public Sprite SelectionSprite;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -31,7 +32,7 @@ public class Villager : MonoBehaviour
 
     private void OnMouseDown()
     {
-        CharacterControl.SetSelectedVillager(this);
+        //CharacterControl.SetSelectedVillager(this);
         clickingOnSelf = true;
     }
 
@@ -67,7 +68,7 @@ public class Villager : MonoBehaviour
     protected virtual void Update()
     {
         //left click: move to the click location
-        if (Input.GetMouseButtonDown(0) && isSelected && !clickingOnSelf)
+        if (Input.GetMouseButtonDown(0) && isSelected && !clickingOnSelf && !EventSystem.current.IsPointerOverGameObject())
         {
             destination = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         }
@@ -88,6 +89,8 @@ public class Villager : MonoBehaviour
 
     public virtual ChestType CanOpen()
     {
+        
         return ChestType.Villager;
     }
+
 }
