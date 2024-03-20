@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -15,6 +16,8 @@ public class Villager : MonoBehaviour
     protected Vector2 destination;
     Vector2 movement;
     protected float speed = 3;
+
+    public float scale = 1;
 
     public Sprite SelectionSprite;
     void Start()
@@ -46,13 +49,16 @@ public class Villager : MonoBehaviour
         movement = destination - (Vector2)transform.position;
 
         //flip the x direction of the game object & children to face the direction we're walking
+        
         if(movement.x > 0)
         {
-            transform.localScale = new Vector3(-1, 1, 1);
+            
+            transform.localScale = new Vector3(-1*scale, 1*scale, 1);
         }
         else if (movement.x < 0)
         {
-            transform.localScale = new Vector3(1, 1, 1);
+          
+            transform.localScale = new Vector3(1*scale, 1*scale, 1);
         }
 
         //stop moving if we're close enough to the target
@@ -63,6 +69,12 @@ public class Villager : MonoBehaviour
         }
 
         rb.MovePosition(rb.position + movement.normalized * speed * Time.deltaTime);
+    }
+
+    public void ChangeScale(float value)
+    {
+        scale = value;
+        transform.localScale = new Vector3(math.sign(transform.localScale.y)*scale, 1*scale, 1);
     }
 
     protected virtual void Update()

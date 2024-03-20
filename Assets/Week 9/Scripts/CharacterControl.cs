@@ -5,10 +5,12 @@ using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CharacterControl : MonoBehaviour
 {
     public TMP_Dropdown dropdown;
+    public Slider slider;
     
 
     public static Villager[] villagers;
@@ -42,5 +44,11 @@ public class CharacterControl : MonoBehaviour
     public void SelectionValueChanged(Int32 value)
     {
         SetSelectedVillager(villagers[value]);
+        slider.value = SelectedVillager.scale;
+    }
+
+    public void ChangeScale(float scale)
+    {
+        SelectedVillager.ChangeScale(scale);
     }
 }
